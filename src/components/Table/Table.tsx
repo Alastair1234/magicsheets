@@ -37,9 +37,14 @@ const Table = ({ data }: Props) => {
       setSelectedIndexes(indexesToSelect);
     },
     onSelectionStart: () => {
-      console.log("OnSelectionStart");
+      console.log('-------------------------')
+      console.log('onSelectionStart')
+      console.log('-------------------------')
+      setSelectionBox(undefined);
+      setSelectedIndexes([]);
     },
-    onSelectionEnd: () => console.log("OnSelectionEnd"),
+    onSelectionEnd: () => {
+    },
     selectionProps: {
       style: {
         border: "2px dashed purple",
@@ -65,13 +70,11 @@ const Table = ({ data }: Props) => {
     }
   }, []);
 
-  console.log("selectedIndexes", selectedIndexes);
-
   return (
     <>
       <DragSelection />
       <div className='max-w-screen w-full'>
-        <table className="max-w-screen h-[calc(100vh-200px)] overflow-auto block">
+        <table className="max-w-screen overflow-x-auto block">
           <thead>
             <tr>
               {data[0]?.map((header, index) => (
@@ -79,9 +82,9 @@ const Table = ({ data }: Props) => {
               ))}
             </tr>
           </thead>
-          <tbody id='elements-container' ref={elementsContainerRef}>
+          <tbody ref={elementsContainerRef}>
             {data.slice(1).map((row, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr data-testid={`grid-cell-${rowIndex}`} key={rowIndex}>
                 {row.map((cell, index) => (
                   <td key={index} className={cx("border px-4 py-2", {
                     'bg-blue-100': selectedIndexes.includes(rowIndex)
