@@ -1,13 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import UploadCSV from '../components/UploadCSV'
 
 const Home: NextPage = () => {
-  const submitRow =async (params:string) => {
-    const response = await fetch('/api/sheet');
-    const data = await response.json();
-    console.log(data);
-  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -21,15 +16,12 @@ const Home: NextPage = () => {
           Magic Sheets
           </a>
         </h1>
-        <p className="mt-3 text-2xl">
-          Get started by uploading{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            <button onClick={()=>submitRow('upload csv')}>
-            your csv
-            </button>
-          </code>
-          
-        </p>
+        <div className='flex items-center'>
+          <p className='rounded-md bg-gray-100 p-3 font-mono text-lg'>
+            Get started by uploading
+          </p>
+          <UploadCSV/>
+        </div>
       </main>
       <footer className="flex h-24 w-full items-center justify-center border-t">
           Made with ❤️{' '} <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
