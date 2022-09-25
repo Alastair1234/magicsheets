@@ -5,13 +5,24 @@ interface Tables {
   rows: Array<any>;
 }
 
-interface Props {
-  tables: Tables;
-}
-const Sheet: NextPage<Props> = (props) => {
+const Sheet: NextPage = () => {
+  const [tables, setTables] = useState<Tables>({ rows: [] });
   const [isEditable, setIsEditable] = useState({ row: -1, column: -1 });
   const [newColumnValue, setNewColumnValue] = useState("");
-  const { tables } = props;
+
+  useEffect(() => {
+    async function getAllData() {
+      const response = await fetch("/api/sheet");
+      const data = await response.json();
+
+      console.log(data);
+      setTables(data);
+    }
+
+    getAllData();
+  }, []);
+
+  console.log(tables);
 
   const handleEditItem = (row: number, column: number, value: string) => {
     setNewColumnValue(value);
@@ -55,23 +66,5 @@ const Sheet: NextPage<Props> = (props) => {
     </div>
   );
 };
-
-export async function getServerSideProps(context: any) {
-  const protocol = context.req.headers.referer?.split("://")[0];
-
-  let data = null;
-  if (protocol) {
-    const res = await fetch(
-      `${protocol}://${context.req.headers.host}/api/sheet`
-    );
-    data = await res.json();
-  }
-
-  return {
-    props: {
-      tables: data,
-    },
-  };
-}
 
 export default Sheet;

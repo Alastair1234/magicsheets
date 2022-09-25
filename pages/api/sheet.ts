@@ -9,7 +9,7 @@ type Table = {
   rows: Array<any>;
 };
 
-const table: Table = {
+let table: Table = {
   rows: [],
 };
 
@@ -20,9 +20,9 @@ export default function handler(
   if (req.method === "GET") {
     res.status(200).json(table);
   } else if (req.method === "POST") {
-    const newTable = JSON.parse(req.body).rows;
-    console.log(JSON.parse(req.body).rows);
-    table.rows.push(...newTable);
+    let newRows = JSON.parse(req.body).rows;
+    table.rows.push(...newRows);
+    console.log(table);
     res.status(200);
   }
 }
