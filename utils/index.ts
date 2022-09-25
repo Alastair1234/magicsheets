@@ -5,7 +5,7 @@ export const formateCsvData = (data: CommonDataType[]) => {
   const tableData: CommonDataType[] = [];
 
   data.map((item: any, index) => {
-    if(index === 0) {
+    if (index === 0) {
       headings = item.map((h: any) => ({
         name: h || '',
         title: h.replace(/\_/g, ' ') || ''
@@ -15,7 +15,7 @@ export const formateCsvData = (data: CommonDataType[]) => {
     const rowIndex = index - 1;
     item.map((d: string, dIndex: number) => {
       const key: string = headings[dIndex].name as string;
-      if(!tableData[rowIndex]) {
+      if (!tableData[rowIndex]) {
         tableData[rowIndex] = { id: `${rowIndex}`, [key]: d || '', }
         return;
       }
@@ -24,20 +24,20 @@ export const formateCsvData = (data: CommonDataType[]) => {
     });
   });
 
+  headings = headings.sort((a, b) => {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  });
+
   return { headings, tableData };
 }
 
-export const calculateRange = (data: [], rowsPerPage: number) => {
-  const range = [];
-  const num = Math.ceil(data.length / rowsPerPage);
-  let i = 1;
-  for (let i = 1; i <= num; i++) {
-    range.push(i);
-  }
-  return range;
-};
-
-export const sliceData = (data, page, rowsPerPage) => {
+export const sliceData = (data: CommonDataType[], page: number, rowsPerPage: number) => {
   return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 };
 

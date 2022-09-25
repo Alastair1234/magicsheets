@@ -1,16 +1,16 @@
-import React from "react";
-import csvToJson from "papaparse";
+import React from 'react';
+import csvToJson from 'papaparse';
 import { useRouter } from 'next/router'
 
-import { AppContext, AppContextType } from "../context/appContext";
-import { formateCsvData } from "../utils";
+import { AppContext, AppContextType } from '../context/appContext';
+import { formateCsvData } from '../utils';
 
 const UploadCsv = () => {
   const { setCsvData } = React.useContext(AppContext) as AppContextType
   const router = useRouter();
 
   const loadData = (e: any) => {
-    const jsonData = csvToJson.parse(e.target?.result);
+    const jsonData: any = csvToJson.parse(e.target?.result);
     const data = formateCsvData(jsonData.data);
     setCsvData(data.tableData, data.headings)
     router.push('/sheet');
