@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.table-view-wrapper {
+  width: 100%;
+}
+
+.table-view-wrapper .pagination button {
+  margin: 5px;
+  padding: 2px;
+  background-color: #ccc;
+}
