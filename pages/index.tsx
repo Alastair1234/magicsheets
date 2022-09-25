@@ -1,7 +1,7 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
-import {ChangeEvent, useEffect, useState} from "react";
-import Table from "./components/table";
+import {ChangeEvent, useState} from "react";
+import Table from "../components/table";
 
 const Home: NextPage = () => {
     const submitRow = async (params: string) => {
@@ -12,9 +12,11 @@ const Home: NextPage = () => {
 
     const handelFileUploaded = (e: ChangeEvent<HTMLInputElement>): void => {
         e.preventDefault();
+        // @ts-ignore
         const file = e.target.files[0]
         const reader = new FileReader();
         reader.onload = async (e) => {
+            // @ts-ignore
             let data = reader.result?.split("\r\n");
             for (let i in data) {
                 data[i] = data[i].split(",");
