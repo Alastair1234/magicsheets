@@ -24,11 +24,6 @@ const Home: NextPage = () => {
         </h1>
         <p className="mt-3 text-1xl">
           Get started by uploading{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            <button onClick={()=>submitRow('upload csv')}>
-            your csv
-            </button>
-          </code>
           <UploadCsv />
         </p>
       </main>
