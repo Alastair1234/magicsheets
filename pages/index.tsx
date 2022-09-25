@@ -7,17 +7,17 @@ import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const submitRow = async (params: string) => {
     const response = await fetch("/api/sheet");
     const data = await response.json();
-    console.log(data);
   };
 
   const onSelectFile = async (event: any) => {
-    console.log(event.target.files);
+    setIsLoading(true);
     Papa.parse(event.target.files[0], {
       complete: async function (results: any) {
-        console.log("finished", results.data);
         const rows = results.data;
         const response = await fetch("/api/sheet", {
           method: "POST",
@@ -32,6 +32,7 @@ const Home: NextPage = () => {
     });
 
     setTimeout(() => {
+      setIsLoading(false);
       router.push("/sheet");
     }, 5000);
   };
@@ -49,6 +50,7 @@ const Home: NextPage = () => {
             Magic Sheets
           </a>
         </h1>
+        {isLoading && <h4>Loading...</h4>}
         <p className="mt-3 text-2xl">
           Get started by uploading{" "}
           <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
